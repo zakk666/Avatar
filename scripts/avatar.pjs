@@ -1,0 +1,143 @@
+//Avatar av = new Avatar();
+
+	
+	int homeWidth = 1400;
+	int homeHeight = 880;
+	
+	float floatingOff = 0.0f;
+	float floatingOffIncrease = 0.001f;
+
+	float perlin3DIncrement = 0.1f;
+	// The noise function's 3rd argument, a global variable that increments once
+	// per cycle
+	float zoff = 0.0f;
+	// We will increment zoff differently than xoff and yoff
+	float zincrement = 0.01f;
+	
+	int perlinStep = 200;
+	float avatarSize = perlinStep/1.2f;
+	float[][] perlinGrid = new float[homeWidth/perlinStep][homeHeight/perlinStep];
+
+	int brightnessCellSize = 100;
+	int brightnessCellRow = homeWidth/brightnessCellSize;
+	int brightnessCellCol = homeHeight/brightnessCellSize;
+
+	int[] brightArray = new int[homeWidth * homeHeight];
+	int[][] brightAvarage = new int[brightnessCellRow][brightnessCellCol];
+	
+	float cameraX;
+	float cameraY;
+	PVector cameraPos;
+	PVector cameraTarget;
+	float cameraXOffset;
+	float cameraYOffset;
+	float cameraPanningDelay = 30;
+	
+	public void setup() {
+		//	Use P3D to enable the 3D rotation stuff
+		size(1440, 900, P3D);
+		frameRate(30);
+		cameraPos = new PVector(680.f, 400.0f);
+		cameraTarget = new PVector();
+	}
+
+	public void draw() {
+		background(200);
+		//		av.floating();
+//		loadPixels();
+		
+		cameraTarget.x = map(mouseX, 0, 1440, 600, 840);
+		cameraTarget.y = map(mouseY, 0, 900, 300, 600);
+		
+		cameraXOffset = (mouseX - (homeWidth/2)) * (float)(140.0f/homeWidth);
+		cameraYOffset = (mouseY - (homeHeight/2)) * (float)(100.0f/homeHeight);
+		
+		
+		cameraPos.x += (cameraTarget.x - cameraPos.x)/cameraPanningDelay;
+		cameraPos.y += (cameraTarget.y - cameraPos.y)/cameraPanningDelay;
+		
+		
+		  camera(cameraPos.x, cameraPos.y, 820.0f, // eyeX, eyeY, eyeZ
+			         700.0f, 450.0f, 0.0f, // centerX, centerY, centerZ
+			         0.0f, 1.0f, 0.0f); // upX, upY, upZ
+		  
+		//	Generate a 2D perlin noise map
+		float xoff = 0.0f; // Start xoff at 0
+
+		rectMode(PConstants.CENTER);
+		for (int x = 0; x < homeWidth/perlinStep; x++) {
+			xoff += perlin3DIncrement;   // Increment xoff 
+			float yoff = 0.0f;   // For every xoff, start yoff at 0
+			for (int y = 0; y < homeHeight/perlinStep; y++) {
+				yoff += perlin3DIncrement; // Increment yoff
+//				noiseDetail(8,0.65f);
+				// Calculate noise and scale by 255
+				float bright = noise(xoff,yoff,zoff)*255;
+				
+				float bright2 = map(bright, 0, 255, 230, 255);
+				
+				perlinGrid[x][y] = bright;
+				
+				fill(color(bright2, bright2, bright2, 200));
+				noStroke();
+				pushMatrix();
+				translate(0, 0, (bright/1.3f-200)*1);
+
+				rect(x * perlinStep + perlinStep/2, y * perlinStep + perlinStep/2, avatarSize, avatarSize);
+				popMatrix();
+
+			}
+		}
+
+		zoff += zincrement; // Increment zoff
+	}
+
+/*
+class Avatar{
+	
+	float height;
+	float width;
+	int xpos;
+	int ypos;
+	color fillColor = color(255);
+	color strokeColor = color(0);
+	int strokeLineWeight = 1;
+	
+	Avatar(){
+		height = 100;
+		width = 100;
+		xpos = 200;
+		ypos = 200;
+	}
+	
+	void display(){
+		stroke(strokeColor);
+		strokeWeight(strokeLineWeight);
+		fill(fillColor);
+		rectMode(CENTER);
+		rect(0, 0, height, width);
+	}
+	
+	void floating(){
+	
+		float noiseScale=0.4;
+		float floatingRotateStep = (noise(floatingOff)-0.5) * 200;
+		
+		PVector rotateStep = new PVector((noise(floatingOff)-0.5) * noiseScale, (noise(floatingOff)-0.5) * noiseScale, (noise(floatingOff)-0.5) * noiseScale);
+	
+		pushMatrix();
+		translate(xpos, ypos, floatingRotateStep);
+		rotateX(rotateStep.x);
+		rotateY(rotateStep.y);
+//		rotateZ(rotateStep.z);
+//		box(45);
+		
+		display();
+		
+		popMatrix();
+		
+		floatingOff += floatingOffIncrease;
+	}
+}
+
+*/
