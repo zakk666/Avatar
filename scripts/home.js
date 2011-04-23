@@ -5,6 +5,9 @@ geometry, material, mesh;
 
 var projector;
 
+var isRendering = true;
+var isRedirected = false;
+
 var mouseX = 0, mouseY = 0,
 
 windowHalfX = window.innerWidth / 2,
@@ -40,7 +43,7 @@ var avatarsTexture = new Array();
 var avatarsMaterial = new Array();
 var avatarsMesh = new Array();
 
-var avatarSize = perlinStep/1.2;
+var avatarSize = perlinStep;
 
 //	For hover status
 var lastHoverAvatarName = "";
@@ -82,7 +85,7 @@ function init() {
 //				geometry = new THREE.Rectangle(200,200);
 	var callbackAvatar = function(x, y){
 		avatarsGeo[x][y] = new THREE.Plane( avatarSize, avatarSize, 1, 1 );
-		avatarsMaterial[x][y] = new THREE.MeshBasicMaterial( { color:0xffffff, wireframe:false } );
+		avatarsMaterial[x][y] = new THREE.MeshBasicMaterial( { color:0xffffff, map: texture } );
 		avatarsMesh[x][y] = new THREE.Mesh( avatarsGeo[x][y], avatarsMaterial[x][y] );
 		avatarsMesh[x][y].position.x = x * perlinStep + perlinStep/2 - 970;
 		avatarsMesh[x][y].position.y = y * perlinStep + perlinStep/2 - 700;
@@ -99,8 +102,8 @@ function init() {
 
 	projector = new THREE.Projector();
 	
-//				renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 0, antialias: false } );
-	renderer = new THREE.CanvasRenderer( { clearColor: 0x000000, clearAlpha: 0, antialias: false } );
+	renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 0, antialias: false } );
+//	renderer = new THREE.CanvasRenderer( { clearColor: 0x000000, clearAlpha: 0, antialias: false } );
     renderer.setSize( homeWidth, homeHeight );
 
     document.body.appendChild( renderer.domElement );
@@ -215,7 +218,6 @@ function render() {
 
 	//	Move the camera
 	if (clickedAvatarName != "") {
-//					camera.target = scene.getChildByName(clickedAvatarName);
 		camera.target.position.x += ( scene.getChildByName(clickedAvatarName).position.x - camera.target.position.x ) * .05;
 		camera.target.position.y += ( scene.getChildByName(clickedAvatarName).position.y - camera.target.position.y ) * .05;
 
@@ -224,8 +226,12 @@ function render() {
 		camera.position.z -= 50;
 		
 		if(camera.position.z < scene.getChildByName(clickedAvatarName).position.z){
-//						alert("goes into!!!!");
-			window.location.href = "avatarChild.html";
+            isRendering = false;
+            if(!isRedirected){
+                window.location.href = "avatarChild.html";
+                isRedirected = true;
+            }
+			
 		}
 		
 		camera.updateMatrix();
@@ -235,9 +241,12 @@ function render() {
 		camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
 		camera.updateMatrix();
 	}
-//		        mesh.rotation.x += 0.01;
-//		        mesh.rotation.y += 0.02;
-
-    renderer.render( scene, camera );
+    
+    if(isRendering){
+        renderer.render( scene, camera );
+    }
+    else{
+        renderer.clear();    
+    }
 
 }
