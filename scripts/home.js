@@ -228,7 +228,7 @@ function render() {
 		if(camera.position.z < scene.getChildByName(clickedAvatarName).position.z){
             isRendering = false;
             if(!isRedirected){
-                window.location.href = "avatarChild.html";
+                window.location.href = "avatarChild.php";
                 isRedirected = true;
             }
 			
