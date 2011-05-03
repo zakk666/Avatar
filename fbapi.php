@@ -79,10 +79,6 @@
 			$favBand = $this->music['data'][count($this->music['data']) - 1]['name'];
 			
 			// 	Facebook Checkins. The checkin request on the api docs page doesn't have the user_checkins permission.
-//			$fql = "SELECT * FROM checkin WHERE author_uid=$this->uid";
-//			$param = array('method' => 'fql.query',
-//							'query' => $fql,
-//							'callback' => '');
 			$this->checkins = $this->facebook->api('/me/checkins');
 			$recentCheckin = $this->checkins['data'][0];
 			$recentPlace = $recentCheckin['place']['name'];

@@ -6,7 +6,10 @@ var chatForm;
 var isAjax = true;
 
 var OPENLINK = 1;
+var SHOWVIDEO = 2;
 var SHOWMAP = 3;
+
+var favoriteBand;
 
 $(document).ready(function(){
 	
@@ -77,6 +80,11 @@ $(document).ready(function(){
 								// setTimeout('window.open($(".demobot_1 a").attr("href"));', 1500);
 							// break;
 						// }
+						
+						if($(".favband").html() != ""){
+							favoriteBand = $(".favband").html();
+						}
+						
 						executeCommand(commandType);
 												
 						$("#chat").focus();
@@ -93,6 +101,9 @@ $(document).ready(function(){
 		}
 		else if(cmd == SHOWMAP){
 			generateGoogleMap();
+		}
+		else if(cmd == SHOWVIDEO){
+			generateYoutubeVideo();
 		}
 
 	}
@@ -118,6 +129,28 @@ $(document).ready(function(){
 			map: map, 
 			title:"Here I am!!"
 		}); 
+	}
+	
+	function generateYoutubeVideo(){
+		$.post(
+			"getYoutubeVideo.php",
+			{keyword : favoriteBand},
+			function(vid){
+				
+				var videoEmbed = "<div class='videoEmbed'>"+
+									"<iframe width='480' height='390' src='http://www.youtube.com/embed/" + 
+									vid + 
+									"?autoplay=1' frameborder='0' allowfullscreen>"+
+									"</iframe>"
+									"</div>";
+				
+				$(".demobot_0").append(videoEmbed);
+			}
+		);
+	}
+	
+	function takeASnapShot(){
+		
 	}
 	
 });
