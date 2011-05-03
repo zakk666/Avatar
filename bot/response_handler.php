@@ -501,7 +501,7 @@ function buildValuesFromArray($response_Array)
 {
     if(count($response_Array)<=0) //there are no array values to save! so just reset
 	{
-		$buildformvals="<input type=\"hidden\" name=\"response_Array[]\" id=\"response_Array[]\" value=\"\">";
+		$buildformvals="<input class=\"chat_input\" type=\"hidden\" name=\"response_Array[]\" id=\"response_Array[]\" value=\"\">";
 	}
 	else
 	{
@@ -517,13 +517,13 @@ function buildValuesFromArray($response_Array)
 				
 					$dvalue = preg_replace('/(\\\\(?:\\\\[^:\\s?*"<>|]+)+)/','\\',$dvalue);
 					
-					$buildformvals.="<input type=\"hidden\" name=\"response_Array[$index][$dindex]\" id=\"response_Array[$index][$dindex]\" value=\"$dvalue\">";
+					$buildformvals.="<input class=\"chat_input\" type=\"hidden\" name=\"response_Array[$index][$dindex]\" id=\"response_Array[$index][$dindex]\" value=\"$dvalue\">";
 				}
 			}
 			else //its just a 1D array so we can set that easily
 			{
 				$value = preg_replace('/(\\\\(?:\\\\[^:\\s?*"<>|]+)+)/','\\',$value);
-				$buildformvals.="<input type=\"hidden\" name=\"response_Array[$index]\" id=\"response_Array[$index]\" value=\"$value\">";
+				$buildformvals.="<input class=\"chat_input\" type=\"hidden\" name=\"response_Array[$index]\" id=\"response_Array[$index]\" value=\"$value\">";
 				//quick clean
 				
 			}
@@ -546,10 +546,10 @@ function formchat($response_Array)
 	$buildformvals = buildValuesFromArray($response_Array);
 	//build form
 	$form = " 
-  &nbsp;&nbsp;&nbsp;&nbsp;<form name=\"chat\" id=\"chat\" method=\"post\" action=\"\">
+  &nbsp;&nbsp;&nbsp;&nbsp;<form name=\"chat\" id=\"chat_form\" method=\"post\" action=\"\">
 			<a name=\"chat\">&nbsp;</a>
-			<input type=\"text\" name=\"chat\" id=\"chat\" size=\"35\" maxlength=\"50\">
-			<input type=\"hidden\" name=\"action\" id=\"action\" value=\"checkresponse\">
+			<input class=\"chat_input\" type=\"text\" name=\"chat\" id=\"chat\" size=\"35\" maxlength=\"50\">
+			<input class=\"chat_input\" type=\"hidden\" name=\"action\" id=\"action\" value=\"checkresponse\">
 			".$buildformvals."
 			<input type=\"submit\" name=\"submit\" value=\"SAY\">
 			</form>";
@@ -604,8 +604,16 @@ function findPersonalMatch($response_Array)
 	global $dbconn,$dbn,$debugmode;
 	//initialise
 	$template="";
+	
+	$input = trim($response_Array['lookingfor']);
+	
+	$words = explode(' ', $input); 
+	$lastInput = trim($words[count($words) - 1]);//, '.?![](){}*'); 
+	$firstInput = trim($words[0]);
+	
+	
 	//sql to run
-	$sql = "SELECT * FROM `$dbn`.`aiml_userdefined` where `pattern` = '".$response_Array['lookingfor']."' AND `userid` = '".$response_Array['userid']."' AND `botid` = '".$response_Array['bot']."' ORDER BY `id` DESC";
+	$sql = "SELECT * FROM $dbn.aiml_userdefined WHERE pattern='" . $response_Array['lookingfor'] . "' AND userid = " . $response_Array['userid'] . " AND botid = " . $response_Array['bot'];
 
 	if(($debugmode==1)||($debugmode==2))
 	{
@@ -616,10 +624,10 @@ function findPersonalMatch($response_Array)
 		$result = mysql_query($sql,$dbconn);
 	}	
 	//debug
-	runDebug("",3,"findMatch","<br>Array Name = Not in array<br>Checking<br><pre>".$sql."</pre>");
+	runDebug("",3,"findPersonalMatch","<br>Array Name = Not in array<br>Checking<br><pre>".$sql."</pre>");
 	
 	//if found a result that isnt 1!=1
-	if( ($result) && (mysql_num_rows($result)>0) )
+	if(mysql_num_rows($result)>0)
 	{
 		$answer = mysql_fetch_array($result);
 	}
@@ -627,7 +635,7 @@ function findPersonalMatch($response_Array)
 	{
 		$answer['template']="undefined-template";
 	}
-	
+		
 	return $answer;
 }
 
@@ -651,7 +659,11 @@ function checkresponse($response_Array)
 		//	looking for matches from aiml_userdefined table.
 		$response_Array['htmltemplate'] = htmlentities($answer['template']);
 		$response_Array['matchtemplate'] = "<botresponse>".$answer['template']."</botresponse>";
-		$response_Array['matchpattern'] = $answer['pattern'];	
+		$response_Array['matchpattern'] = $answer['pattern'];
+		
+		$response_Array['lookupTable'] = 'aiml_userdefined';
+		
+		
 		if(isset($answer['thatpattern']))
 		{
 			$response_Array['matchthatpattern'] = $answer['thatpattern'];
@@ -665,6 +677,8 @@ function checkresponse($response_Array)
 	{
 		//DELETE COME BACK HERE
 		$response_Array = findMatch($response_Array);
+		$response_Array['lookupTable'] = 'aiml';
+		
 	}
 	//set the bot	
 	$response_Array['bot']=$thisbot;	
@@ -821,7 +835,7 @@ AND
 						$ansArr[$i]['thatpattern'] = $row['thatpattern'];
 						$ansArr[$i]['topic'] = $row['topic'];
 						$ansArr[$i]['template'] = $row['template'];
-						
+						$ansArr[$i]['commandType'] = $row['commandType'];
 						
 					}
 			}
@@ -838,7 +852,7 @@ AND
 					$ansArr[$i]['thatpattern'] = $row['thatpattern'];
 					$ansArr[$i]['topic'] = $row['topic'];
 					$ansArr[$i]['template'] = $row['template'];
-					
+					$ansArr[$i]['commandType'] = $row['commandType'];
 				
 					
 			} 
@@ -1056,7 +1070,8 @@ AND
 	$response_Array['htmltemplate'] = htmlentities($alltemplate);
 	$response_Array['matchtemplate'] = "<botresponse>".$alltemplate."</botresponse>";
 	$response_Array['matchpattern'] = $ansArr[$top]['pattern'];	
-	$response_Array['matchthatpattern'] = $ansArr[$top]['thatpattern'];	
+	$response_Array['matchthatpattern'] = $ansArr[$top]['thatpattern'];
+	$response_Array['commandType'] = $ansArr[$top]['commandType'];
 	return $response_Array;
 }
 ?>

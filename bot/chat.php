@@ -133,13 +133,13 @@ if( (isset($_POST['action'])) && (trim($_POST['chat'])!=""))
 				{
 					if(isset($response_Array['input'][$i]))
 					{
-						$res .= "<div class=\"demouser\">You: ".stripslashes(urldecode($response_Array['input'][$i]))."</div>";
-   						$res .= "<div class=\"demobot\">Bot: ".stripslashes(urldecode($response_Array['that'][$i]))."</div>";
+						$res .= "<div class=\"demouser_$i\">You: ".stripslashes(urldecode($response_Array['input'][$i]))."</div>";
+   						$res .= "<div class=\"demobot_$i\">Bot: ".stripslashes(urldecode($response_Array['that'][$i]))."</div>";
 					}
 					else
 					{
-						$res .= "<div class=\"demouser\">&nbsp;</div>";
-						$res .= "<div class=\"demobot\">&nbsp;</div>";
+						$res .= "<div class=\"demouser_$i\">&nbsp;</div>";
+						$res .= "<div class=\"demobot_$i\">&nbsp;</div>";
 					}
 				}
 				
@@ -169,8 +169,8 @@ else
 {
 	for($i=0;$i<=$convoLines;$i++)
 	{
-		$res .= "<div class=\"demouser\">&nbsp;</div>";
-		$res .= "<div class=\"demobot\">&nbsp;</div>";
+		$res .= "<div class=\"demouser_$i\">&nbsp;</div>";
+		$res .= "<div class=\"demobot_$i\">&nbsp;</div>";
 	}
 	
 	//initialise the array
@@ -193,9 +193,13 @@ else
 }
 mysql_close($dbconn);
 
-echo "<pre>";
-print_r($response_Array);
-echo "</pre>";
-
-
+	$returnData = $res . $formchat;
+	
+	print($returnData);
+	
+	
+	// echo "<pre>";
+	// print_r($response_Array);
+	// echo "</pre>";
+	
 ?>

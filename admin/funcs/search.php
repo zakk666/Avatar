@@ -161,6 +161,7 @@ function editAIMLForm($id)
 		$template = htmlentities($row['template']);
 		$filename = $row['filename'];
 		$id = $row['id'];
+		$commandType = $row['commandType'];
 		
 	
 	
@@ -189,9 +190,14 @@ function editAIMLForm($id)
 				<input type=\"text\" id=\"template\" name=\"template\"  value=\"$template\"/>
 			</div>
 			
-						<div class=\"fm-opt\">
+			<div class=\"fm-opt\">
 				<label for=\"filename\">Filename: </label>
 				<input type=\"text\" id=\"filename\" name=\"filename\"  value=\"$filename\"/>
+			</div>
+			
+			<div class=\"fm-opt\">
+				<label for=\"commandType\">Command Type: </label>
+				<input type=\"text\" id=\"commandType\" name=\"commandType\"  value=\"$commandType\"/>
 			</div>
 			
 	</fieldset>
@@ -218,6 +224,7 @@ function updateAIML()
 	$thatpattern = strtoupper(mysql_escape_string(trim($_POST['thatpattern'])));
 	$topic = strtoupper(mysql_escape_string(trim($_POST['topic'])));
 	$id = trim($_POST['id']);
+	$commandType = trim($_POST['commandType']);
 
 
 	if(($template == "")||($pattern== "")||($id==""))
@@ -226,7 +233,7 @@ function updateAIML()
 	}
 	else
 	{
-		$sql = "UPDATE `$dbn`.`aiml` SET `pattern` = '$pattern',`thatpattern`='$thatpattern',`template`='$template',`topic`='$topic',`filename`='$filename' WHERE `id`='$id' LIMIT 1";
+		$sql = "UPDATE `$dbn`.`aiml` SET `pattern` = '$pattern',`thatpattern`='$thatpattern',`template`='$template',`topic`='$topic',`filename`='$filename', commandType=$commandType WHERE `id`='$id' LIMIT 1";
 		//echo $sql;
 		$result = mysql_query($sql,$dbconn)or die(mysql_error());
 		
