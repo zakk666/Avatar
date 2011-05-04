@@ -105,6 +105,7 @@ $(document).ready(function(){
 						
 						// 	Autofocus to the input area			
 						$("#chat").focus();
+						chatInput = $("#chat");
 					});
 			
 			return false;
