@@ -29,6 +29,7 @@
 		margin-bottom: 0px;
 	}
 </style></head>
+<div id="dummyInput">hello, how are you doing</div>
 
 <!-- <div>
   <p style=\"\">
@@ -37,10 +38,10 @@
    echo "<br/>";
    echo $formchat;
   ?></p>
-</div> --><div id="ajaxtest">
+</div> -->
+<div id="dialogPanel">
 </div>
-
-<div id="dummyInput"></div>
+<div class="inputUnderline"><img src="images/inputunder.png" /></div>
 
 <div id="camera"></div>
 <div id="snapshotCountDown"></div>

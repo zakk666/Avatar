@@ -62,7 +62,7 @@ $(document).ready(function(){
 								'</form>'+
 							'</p>';
 		
-		$("#ajaxtest").html(ajaxChatForm);
+		$("#dialogPanel").html(ajaxChatForm);
 		
 		chatForm = $("#chat_form");
 		
@@ -93,7 +93,7 @@ $(document).ready(function(){
 					formData,
 					function(data){
 						// alert(data);
-						$("#ajaxtest").html(data);
+						$("#dialogPanel").html(data);
 						
 						var commandType = $("#response_Array\\[commandType\\]").val();
 						
@@ -105,7 +105,7 @@ $(document).ready(function(){
 						
 						// 	Autofocus to the input area			
 						$("#chat").focus();
-						chatInput = $("#chat");
+						
 					});
 			
 			return false;

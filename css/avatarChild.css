@@ -1,38 +1,32 @@
+*{
+	font-family: "Myriad Pro";
+	font-size: 20px;
+	
+}
 body{
 	background-image: url("../images/bg.png");
 	
-	font-family: "Myriad Pro";
-	font-size: 20px;
 	height: 875px;
 	cursor: url('../images/cursor.png'), auto;
 	
+}
+
+#dialogPanel{
+	position: absolute;
+	left: 376px;
+	top: 300px
 }
 
 .chatlog{
 	text-shadow:0 0 10px #0A0A0A;
 	font-size: 32px;
 	color: #fff;
-
+	line-height: 48px;
 }
 
 input#chat{
 	border: none;
-	background-color: transparent;
-	
-	text-shadow:0 0 10px #0A0A0A;
-	height: 57px;
-	line-height: 57px;
-	font-size: 32px;
-	color: #fff;
-	
-	position: absolute;
-	left: 300px;
-	top: 680px;
-}
-
-#dummyInput{
-	border: none;
-	background-color: transparent;
+ 	background-color: transparent;
 	
 	text-shadow:0 0 10px #0A0A0A;
 	height: 57px;
@@ -41,8 +35,30 @@ input#chat{
 	color: #fff;
 	
 	position: absolute;
-	left: 300px;
-	top: 684px;
+	top: 284px;
+	left: -23px;
+	text-align: center;
+}
+
+.inputUnderline{
+	position: absolute;
+	left: 199px;
+	top: 629px;
+}
+
+#dummyInput{
+	
+	text-shadow:0 0 10px #0A0A0A;
+	height: 57px;
+	line-height: 57px;
+	font-size: 37px;
+	color: #fff;
+	
+	position: absolute;
+	left: 317px;
+	top: 585px;
+	width: 735px;
+	text-align: center;
 }
 
 
