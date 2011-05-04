@@ -78,9 +78,9 @@ $(document).ready(function(){
 				formData[dataKey] = $(this).val();
 			});
 			
-			$("#dummyInput").html(chatInput.val());
+			$("#dummyInput").html($("#chat").val());
 			
-			chatInput.val("");
+			$("#chat").val("");
 			
 			$("#dummyInput").animate({scale: 3.5, opacity: 0}, 
 										500,
