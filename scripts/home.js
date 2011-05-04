@@ -15,7 +15,7 @@ windowHalfY = window.innerHeight / 2;
 
 //	The size of the app
 var homeWidth = 1400;
-var homeHeight = 880;
+var homeHeight = 860;
 
 //	The viarables for perlin noise
 var perlin;
@@ -29,8 +29,8 @@ var perlinNoise = new SimplexNoise();
 var perlinStep = 200;
 //			var perlinXSeg = homeWidth/perlinStep;
 //			var perlinYSeg = homeHeight/perlinStep;
-var perlinXSeg = 10;
-var perlinYSeg = 10;
+var perlinXSeg = 13;
+var perlinYSeg = 13;
 
 var perlinGrid = new Array();
 for (var i=0; i<perlinXSeg; i++){
@@ -75,8 +75,8 @@ function init() {
     
     camera = new THREE.Camera( 30, homeWidth / homeHeight, 1, 10000 );
     camera.position.z = 2500;
-//				camera.position.x = 400;
-//				camera.position.y = 200;
+	// camera.position.x = 400;
+	// camera.position.y = 200;
 
     scene = new THREE.Scene();
 	
@@ -87,8 +87,8 @@ function init() {
 		avatarsGeo[x][y] = new THREE.Plane( avatarSize, avatarSize, 1, 1 );
 		avatarsMaterial[x][y] = new THREE.MeshBasicMaterial( { color:0xffffff, map: texture } );
 		avatarsMesh[x][y] = new THREE.Mesh( avatarsGeo[x][y], avatarsMaterial[x][y] );
-		avatarsMesh[x][y].position.x = x * perlinStep + perlinStep/2 - 970;
-		avatarsMesh[x][y].position.y = y * perlinStep + perlinStep/2 - 700;
+		avatarsMesh[x][y].position.x = x * perlinStep + perlinStep/2 - 1270;
+		avatarsMesh[x][y].position.y = y * perlinStep + perlinStep/2 - 1200;
 		avatarsMesh[x][y].name = "avatar_" + x + "_" + y;
 		scene.addObject(avatarsMesh[x][y]);
 	};

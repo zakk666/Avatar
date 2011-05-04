@@ -1,3 +1,13 @@
+body{
+	background-image: url("../images/bg.png");
+}
+
+
+input#chat{
+	border: none;
+	background-color: transparent;
+}
+
 a.hidden{
 	display: none;
 }
