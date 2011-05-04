@@ -8,6 +8,12 @@ var isAjax = true;
 var OPENLINK = 1;
 var SHOWVIDEO = 2;
 var SHOWMAP = 3;
+var OPENCAMERA = 4;
+var SNAPSHOT = 5;
+var SHOWHISTORY = 6;
+
+var countDownPanel;
+var snapshotHistory;
 
 var favoriteBand;
 
@@ -17,8 +23,12 @@ $(document).ready(function(){
 	
 	formData['isAjax'] = isAjax;
 	
+	countDownPanel = $("#snapshotCountDown");
+	snapshotHistory = $("#snapshotHistory");
+	// showHistory();
+	
 	if(isAjax){
-		
+		// 	Building the initial chat form
 		var ajaxChatForm = '<p style=\"\">'+
 								'<div class="demouser">'+
 									'&nbsp;'+
@@ -59,7 +69,7 @@ $(document).ready(function(){
 	
 		$("#chat").focus();
 
-		
+		// 	Submit the form to programO php scripts.
 		chatForm.live("submit", function(){
 			// 	Wrap all the input field into the formData object and send to php
 			$(".chat_input").each(function(){
@@ -75,18 +85,13 @@ $(document).ready(function(){
 						
 						var commandType = $("#response_Array\\[commandType\\]").val();
 						
-						// switch(commandType){
-							// case 1:
-								// setTimeout('window.open($(".demobot_1 a").attr("href"));', 1500);
-							// break;
-						// }
-						
 						if($(".favband").html() != ""){
 							favoriteBand = $(".favband").html();
 						}
 						
 						executeCommand(commandType);
-												
+						
+						// 	Autofocus to the input area			
 						$("#chat").focus();
 					});
 			
@@ -94,10 +99,11 @@ $(document).ready(function(){
 		});
 	}
 	
+	// 	Execute different command according to the bot response.
 	function executeCommand(cmd){
 		
 		if(cmd == OPENLINK){
-			setTimeout('window.open($(".demobot_1 a").attr("href"));', 1500);
+			setTimeout('window.open($(".demobot_1 a").attr("href"));', 1000);
 		}
 		else if(cmd == SHOWMAP){
 			generateGoogleMap();
@@ -105,9 +111,19 @@ $(document).ready(function(){
 		else if(cmd == SHOWVIDEO){
 			generateYoutubeVideo();
 		}
+		else if(cmd == OPENCAMERA){
+			openCamera();
+		}
+		else if(cmd == SNAPSHOT){
+			takeASnapShot();
+		}
+		else if(cmd == SHOWHISTORY){
+			showHistory();
+		}
 
 	}
 	
+	// 	Show a map for the question like "Where are you?"
 	function generateGoogleMap(){
 		
 		var lat = $("#lat").html();
@@ -131,6 +147,7 @@ $(document).ready(function(){
 		}); 
 	}
 	
+	// 	Show a video
 	function generateYoutubeVideo(){
 		$.post(
 			"getYoutubeVideo.php",
@@ -149,10 +166,55 @@ $(document).ready(function(){
 		);
 	}
 	
-	function takeASnapShot(){
-		
+	// 	Open up the camera
+	function openCamera(){
+		$("#camera").webcam({
+	        width: 320,
+	        height: 240,
+	        mode: "save",
+	        swffile: "jscam.swf",
+	        onTick: function(remain) {
+	        	countDownPanel.html(remain);
+	        },
+	        onSave: function() {},
+	        onCapture: function() {
+	        	countDownPanel.html("Captured!!!");
+	        	
+	        	window.webcam.save("saveSnapshot.php");
+	        },
+	        debug: function() {},
+	        onLoad: function() {
+	        	countDownPanel.html("camera ready!!!");
+	        }
+		});
+
 	}
 	
+	// 	Take a snap shot for the user
+	function takeASnapShot(){
+		window.webcam.capture(3);
+	}
+	
+	// 	Show the previous snapshots
+	function showHistory(){
+		$.post(
+			"getSnapshotHistory.php",
+			{},
+			function(data){
+				var historyLimit = (data.length < 10) ? data.length : 10;
+				var sshistory = "<ul id='historyList'>";
+
+				for(var i=0; i<historyLimit; i++){
+					sshistory +="<li class='historyElement'>"+
+									"<img class='historyImage' src='snapshots/" + data[i] + "'>"+
+								"</li>"
+				}
+				sshistory += "</ul>";
+				snapshotHistory.html(sshistory);
+			},
+			"json"
+		)
+	}
 });
 
 

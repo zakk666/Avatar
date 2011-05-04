@@ -7,3 +7,8 @@ a.hidden{
 	width: 400px;
 	border: 1px solid #ccc;
 }
+
+#camera{
+	width: 320px;
+	height: 240px;
+}

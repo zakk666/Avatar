@@ -16,6 +16,8 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <script type="text/javascript" src="scripts/programoAjaxify.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&key=ABQIAAAAw6UYDscAzQWabetoB3_B_RRETdkkv1XUJhh2psM06QxrD1EsQBQPcC7iJwS7B1EsVDFoBoPBFoJkvA"></script>
+<script type="text/javascript" src="scripts/jquery.webcam.js"></script>
+
 <link rel="stylesheet" href="css/avatarChild.css" />
 <style type="text/css">
 	<!--
@@ -49,6 +51,10 @@
 
 
 </div>
+
+<div id="camera"></div>
+<div id="snapshotCountDown"></div>
+<div id="snapshotHistory"></div>
 <p>&nbsp;</p>
 </body>
 </html>
