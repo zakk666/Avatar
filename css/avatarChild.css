@@ -1,12 +1,50 @@
 body{
 	background-image: url("../images/bg.png");
+	
+	font-family: "Myriad Pro";
+	font-size: 20px;
+	
+	cursor: url('../images/cursor.png'), auto;
+	
 }
 
+.chatlog{
+	text-shadow:0 0 10px #0A0A0A;
+	font-size: 32px;
+	color: #fff;
+
+}
 
 input#chat{
 	border: none;
 	background-color: transparent;
+	
+	text-shadow:0 0 10px #0A0A0A;
+	height: 57px;
+	line-height: 57px;
+	font-size: 32px;
+	color: #fff;
+	
+	position: absolute;
+	left: 300px;
+	top: 680px;
 }
+
+#dummyInput{
+	border: none;
+	background-color: transparent;
+	
+	text-shadow:0 0 10px #0A0A0A;
+	height: 57px;
+	line-height: 57px;
+	font-size: 37px;
+	color: #fff;
+	
+	position: absolute;
+	left: 300px;
+	top: 684px;
+}
+
 
 a.hidden{
 	display: none;

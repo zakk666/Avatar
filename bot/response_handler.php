@@ -548,10 +548,9 @@ function formchat($response_Array)
 	$form = " 
   &nbsp;&nbsp;&nbsp;&nbsp;<form name=\"chat\" id=\"chat_form\" method=\"post\" action=\"\">
 			<a name=\"chat\">&nbsp;</a>
-			<input class=\"chat_input\" type=\"text\" name=\"chat\" id=\"chat\" size=\"35\" maxlength=\"50\">
+			<input class=\"chat_input\" type=\"text\" name=\"chat\" id=\"chat\" size=\"35\" maxlength=\"50\" autocomplete=\"off\">
 			<input class=\"chat_input\" type=\"hidden\" name=\"action\" id=\"action\" value=\"checkresponse\">
 			".$buildformvals."
-			<input type=\"submit\" name=\"submit\" value=\"SAY\">
 			</form>";
 	//debug
 	runDebug($response_Array,3,"formchat","<br>Array Name = Array#0<br>Display form");

@@ -3,6 +3,7 @@
 /* = Ajaxify the programO, so that the bot can chat without page refreshing = */
 /* ========================================================================== */
 var chatForm;
+var chatInput;
 var isAjax = true;
 
 var OPENLINK = 1;
@@ -18,7 +19,6 @@ var snapshotHistory;
 var favoriteBand;
 
 $(document).ready(function(){
-	
 	var formData = {};
 	
 	formData['isAjax'] = isAjax;
@@ -30,23 +30,23 @@ $(document).ready(function(){
 	if(isAjax){
 		// 	Building the initial chat form
 		var ajaxChatForm = '<p style=\"\">'+
-								'<div class="demouser">'+
-									'&nbsp;'+
+								'<div class="chatlog demouser">'+
+									'You: Hi there!!'+
 								'</div>'+
-								'<div class="demobot">'+
-									'&nbsp;'+
+								'<div class="chatlog demobot">'+
+									'Yang: Hey, How are you'+
 								'</div>'+
-								'<div class="demouser">'+
-									'&nbsp;'+
+								'<div class="chatlog demouser">'+
+									'You: Can you see me'+
 								'</div>'+
-								'<div class="demobot">'+
-									'&nbsp;'+
+								'<div class="chatlog demobot">'+
+									'Yang: Of course'+
 								'</div>'+
 								'<br/>'+
 								'&nbsp;&nbsp;&nbsp;&nbsp;'+
 								'<form name="chat" id="chat_form" method="post" action="">'+
 									'<a name="chat">&nbsp;</a>'+
-									'<input class="chat_input" type="text" name="chat" id="chat" size="35" maxlength="50" />'+
+									'<input class="chat_input" type="text" name="chat" id="chat" size="35" maxlength="50" autocomplete="off"/>'+
 									'<input class="chat_input" type="hidden" name="action" id="action" value="checkresponse">'+
 									'<input class="chat_input" type="hidden" name="response_Array[sessionid]" id="response_Array[sessionid]" value="rdgh2bbgi7mamifo2q4iff54v1">'+
 									'<input class="chat_input" type="hidden" name="response_Array[userid]" id="response_Array[userid]" value="1">'+
@@ -59,15 +59,16 @@ $(document).ready(function(){
 									'<input class="chat_input" type="hidden" name="response_Array[seventh]" id="response_Array[seventh]" value="om">'+
 									'<input class="chat_input" type="hidden" name="response_Array[last]" id="response_Array[last]" value="om">'+
 									'<input class="chat_input" type="hidden" name="response_Array[rname]" id="response_Array[rname]" value="Array#0">'+
-									'<input type="submit" name="submit" value="SAY">'+
 								'</form>'+
 							'</p>';
 		
 		$("#ajaxtest").html(ajaxChatForm);
 		
 		chatForm = $("#chat_form");
-	
-		$("#chat").focus();
+		
+		chatInput = $("#chat");
+		
+		chatInput.focus();		
 
 		// 	Submit the form to programO php scripts.
 		chatForm.live("submit", function(){
@@ -76,7 +77,18 @@ $(document).ready(function(){
 				var dataKey = $(this).attr("id");
 				formData[dataKey] = $(this).val();
 			});
-
+			
+			$("#dummyInput").html(chatInput.val());
+			
+			chatInput.val("");
+			
+			$("#dummyInput").animate({scale: 3.5, opacity: 0}, 
+										500,
+										function(){
+											$("#dummyInput").html("");
+											$("#dummyInput").css({transform: 'scale(1)', opacity: 1});
+										});
+			
 			$.post("bot/chat.php",
 					formData,
 					function(data){
