@@ -133,13 +133,13 @@ if( (isset($_POST['action'])) && (trim($_POST['chat'])!=""))
 				{
 					if(isset($response_Array['input'][$i]))
 					{
-						$res .= "<div class=\"chatlog demouser_$i\">You: ".stripslashes(urldecode($response_Array['input'][$i]))."</div>";
-   						$res .= "<div class=\"chatlog demobot_$i\">Yang: ".stripslashes(urldecode($response_Array['that'][$i]))."</div>";
+						$res .= "<div class=\"chatlog demouser demouser_$i\">You: ".stripslashes(urldecode($response_Array['input'][$i]))."</div>";
+   						$res .= "<div class=\"chatlog demobot demobot_$i\">Yang: ".stripslashes(urldecode($response_Array['that'][$i]))."</div>";
 					}
 					else
 					{
-						$res .= "<div class=\"chatlog demouser_$i\">&nbsp;</div>";
-						$res .= "<div class=\"chatlog demobot_$i\">&nbsp;</div>";
+						$res .= "<div class=\"chatlog demouser demouser_$i\">&nbsp;</div>";
+						$res .= "<div class=\"chatlog demobot demobot_$i\">&nbsp;</div>";
 					}
 				}
 				
@@ -169,8 +169,8 @@ else
 {
 	for($i=0;$i<=$convoLines;$i++)
 	{
-		$res .= "<div class=\"chatlog demouser_$i\">&nbsp;</div>";
-		$res .= "<div class=\"chatlog demobot_$i\">&nbsp;</div>";
+		$res .= "<div class=\"chatlog demouser demouser_$i\">&nbsp;</div>";
+		$res .= "<div class=\"chatlog demobot demobot_$i\">&nbsp;</div>";
 	}
 	
 	//initialise the array

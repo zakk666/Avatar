@@ -95,7 +95,13 @@ function init() {
 	//	Draw the square grid. Right now it is thin cube, change to square later.
 	for (var x = 0; x < perlinXSeg; x++) {
 		for (var y = 0; y < perlinYSeg; y++) {
-			var texture = THREE.ImageUtils.loadTexture( "images/female.png", THREE.UVMapping, callbackAvatar(x, y) );
+			
+			if(x == 7 && y == 5){
+				var texture = THREE.ImageUtils.loadTexture( "images/head.png", THREE.UVMapping, callbackAvatar(x, y) );
+			}
+			else{
+				var texture = THREE.ImageUtils.loadTexture( "images/female.png", THREE.UVMapping, callbackAvatar(x, y) );
+			}
 			avatarsTexture[x][y] = texture;
 		}
 	}

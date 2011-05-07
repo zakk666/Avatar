@@ -30,17 +30,17 @@ $(document).ready(function(){
 	if(isAjax){
 		// 	Building the initial chat form
 		var ajaxChatForm = '<p style=\"\">'+
-								'<div class="chatlog demouser">'+
-									'You: Hi there!!'+
+								'<div class="chatlog demouser demouser_1">'+
+									'&nbsp'+
 								'</div>'+
-								'<div class="chatlog demobot">'+
-									'Yang: Hey, How are you'+
+								'<div class="chatlog demobot demobot_1">'+
+									'Yang: Hey, type to start talk with me.'+
 								'</div>'+
-								'<div class="chatlog demouser">'+
-									'You: Can you see me'+
+								'<div class="chatlog demouser demouser_0">'+
+									'&nbsp'+
 								'</div>'+
-								'<div class="chatlog demobot">'+
-									'Yang: Of course'+
+								'<div class="chatlog demobot demobot_0">'+
+									'&nbsp'+
 								'</div>'+
 								'<br/>'+
 								'&nbsp;&nbsp;&nbsp;&nbsp;'+
@@ -168,7 +168,7 @@ $(document).ready(function(){
 			function(vid){
 				
 				var videoEmbed = "<div class='videoEmbed'>"+
-									"<iframe width='480' height='390' src='http://www.youtube.com/embed/" + 
+									"<iframe width='400' height='300' src='http://www.youtube.com/embed/" + 
 									vid + 
 									"?autoplay=1' frameborder='0' allowfullscreen>"+
 									"</iframe>"
@@ -187,20 +187,42 @@ $(document).ready(function(){
 	        mode: "save",
 	        swffile: "jscam.swf",
 	        onTick: function(remain) {
+	        	if(remain == 0){
+	        		countDownPanel.html("Cheese!");
+	        		
+    		        $("#flash").css("display", "block");
+			        $("#flash").fadeOut("fast", function () {
+			                $("#flash").css("opacity", 1);
+			        });
+
+	        	}
 	        	countDownPanel.html(remain);
 	        },
-	        onSave: function() {},
+	        onSave: function() {
+	        	// alert("saved");
+	        	
+	        	// $.post(
+					// "getSnapshotHistory.php",
+					// {},
+					// function(data){
+// 											
+						// sshistory = "<img src='snapshots/" + data[0] + "'>";
+						// $("#camera").html(sshistory);
+					// },
+					// "json"
+				// );
+
+	        },
 	        onCapture: function() {
-	        	countDownPanel.html("Captured!!!");
+	       		countDownPanel.html("");
 	        	
 	        	window.webcam.save("saveSnapshot.php");
-	        },
+			},
 	        debug: function() {},
 	        onLoad: function() {
-	        	countDownPanel.html("camera ready!!!");
+	        	countDownPanel.html("");
 	        }
 		});
-
 	}
 	
 	// 	Take a snap shot for the user
@@ -214,7 +236,7 @@ $(document).ready(function(){
 			"getSnapshotHistory.php",
 			{},
 			function(data){
-				var historyLimit = (data.length < 10) ? data.length : 10;
+				var historyLimit = (data.length < 6) ? data.length : 6;
 				var sshistory = "<ul id='historyList'>";
 
 				for(var i=0; i<historyLimit; i++){
@@ -223,10 +245,10 @@ $(document).ready(function(){
 								"</li>"
 				}
 				sshistory += "</ul>";
-				snapshotHistory.html(sshistory);
+				$("#camera").html(sshistory);
 			},
 			"json"
-		)
+		);
 	}
 });
 

@@ -29,7 +29,8 @@
 		margin-bottom: 0px;
 	}
 </style></head>
-<div id="dummyInput">hello, how are you doing</div>
+<div id="avatarProfileImage"><img src="images/head.png" /></div>
+<div id="dummyInput"></div>
 
 <!-- <div>
   <p style=\"\">
@@ -44,6 +45,7 @@
 <div class="inputUnderline"><img src="images/inputunder.png" /></div>
 
 <div id="camera"></div>
+<div id="flash"></div>
 <div id="snapshotCountDown"></div>
 <div id="snapshotHistory"></div>
 </body>

@@ -9,4 +9,5 @@
 body{
 	background-image: url("../images/bg.png");
 	cursor: url('../images/cursor.png'), auto;
+	overflow: hidden;
 }

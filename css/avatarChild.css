@@ -1,6 +1,5 @@
 *{
 	font-family: "Myriad Pro";
-	font-size: 20px;
 	
 }
 body{
@@ -8,7 +7,13 @@ body{
 	
 	height: 875px;
 	cursor: url('../images/cursor.png'), auto;
-	
+	overflow: hidden;
+}
+
+#avatarProfileImage{
+	position: absolute;
+	left: 65px;
+	top: 263px;
 }
 
 #dialogPanel{
@@ -22,6 +27,15 @@ body{
 	font-size: 32px;
 	color: #fff;
 	line-height: 48px;
+	width: 626px;
+	position: relative;
+	left: -41px;
+	top: -30px;
+}
+
+.demouser{
+	color: #888;
+	text-shadow:0 0 10px #666;
 }
 
 input#chat{
@@ -35,7 +49,7 @@ input#chat{
 	color: #fff;
 	
 	position: absolute;
-	top: 284px;
+	top: 324px;
 	left: -23px;
 	text-align: center;
 }
@@ -43,7 +57,7 @@ input#chat{
 .inputUnderline{
 	position: absolute;
 	left: 199px;
-	top: 629px;
+	top: 679px;
 }
 
 #dummyInput{
@@ -56,7 +70,7 @@ input#chat{
 	
 	position: absolute;
 	left: 317px;
-	top: 585px;
+	top: 625px;
 	width: 735px;
 	text-align: center;
 }
@@ -70,9 +84,79 @@ a.hidden{
 	height: 400px;
 	width: 400px;
 	border: 1px solid #ccc;
+	position: absolute !important;
+	top: -307px;
+	left: 662px;
+	z-index: 999;
 }
 
 #camera{
 	width: 320px;
 	height: 240px;
+	position: absolute;
+	left: 993px;
+	top: 250px;
 }
+
+#flash{
+	width: 320px;
+	height: 240px;
+	position: absolute;
+	left: 993px;
+	top: 235px;
+	
+	background-color: #fff;
+	display: none;
+}
+
+#snapshotCountDown{
+	position: absolute;
+	font-size: 40px;
+	color: #fff;
+	left: 1020px;
+	top: 497px;
+	width: 264px;
+	font-size: 40px;
+	text-align: center;
+	text-shadow:0 0 10px #0A0A0A;
+}
+
+#historyList{
+	list-style: none;
+}
+
+.historyElement{
+	display: inline;
+}
+
+.historyImage{
+	max-height: 100px;
+	max-width: 200px;
+}
+
+.videoEmbed{
+	position: absolute;
+	top: -190px;
+	left: 663px;
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
